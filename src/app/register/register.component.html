@@ -1,0 +1,54 @@
+<h1>Register</h1>
+<div class="container">
+    <form class="container" #registerForm="ngForm" (ngSubmit)="registerUser()">
+      <small [class.text-danger]="msg.status==500">{{msg.message}}</small>
+      <div class="form-group">
+        <label for="exampleInputEmail1">User Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" required
+        [(ngModel)]="user.username" name="username" #username="ngModel" [class.is-invalid]="username.invalid && username.touched">
+        <div *ngIf="username.invalid && (username.dirty || username.touched)">
+          <small class="text-danger" *ngIf="username.errors.required">Name is Required</small>
+          <small class="text-danger" *ngIf="username.errors.minlength">Name must be more than 2 charcaters</small>
+        </div>
+      </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+          [(ngModel)]="user.emailId" name="emailId" #emailId="ngModel" [class.is-invalid]="emailId.invalid && emailId.touched" required >
+          <div *ngIf="emailId.invalid && (emailId.dirty || emailId.touched)">
+            <small class="text-danger" *ngIf="emailId.errors.required">email is Required</small>
+            <small class="text-danger" *ngIf="emailId.errors.email">Invalid email</small>
+          </div>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="user.password"
+          name="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" required >
+          <div *ngIf="password.invalid && (password.dirty || password.touched)">
+            <small class="text-danger" *ngIf="password.errors.required">Password is Required</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Confirm Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="confirm Password" (ngModel)="user.password"
+            name="cpassword" [class.is-invalid]="cpassword.invalid && cpassword.touched" #cpassword="ngModel">
+            <small class="text-danger" [class.d-none]="(cpassword.value == password.value || cpassword.untouched)">Password don't match</small>
+          </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Phone</label>
+            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter phone"
+            [(ngModel)]="user.phone" name="phone" #phone="ngModel" required [class.is-invalid]="phone.invalid && phone.touched" maxlength="10" minlength="10">
+            <div *ngIf="phone.invalid && (phone.touched || phone.dirty)">
+              <small class="text-danger" *ngIf="phone.errors.required">Phone Numeber is Required</small>
+              <small class="text-danger" *ngIf="phone.errors.minlength">Phone number must be 10 digits</small>
+            </div>
+          </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.form.invalid">Register</button>
+      </form>
+      <small class="float-right" [routerLink]="['/register']" routerLinkActive="router-link-active" >Already registered ? Click to login</small>
+    </div>
